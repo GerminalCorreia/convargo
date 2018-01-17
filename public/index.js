@@ -99,7 +99,17 @@ function decreazingPrice (m3) {
   return (reduction);
 }
 
+function calculCommission () {
+  for (var i = 0; i < deliveries.length; i++) {
+    var commission = deliveries[i].price * 0.3;
+    deliveries[i].commission.insurance = commission / 2;
+    deliveries[i].commission.treasury = Math.floor(deliveries[i].distance/500)
+    deliveries[i].commission.convargo = commission - deliveries[i].commission.insurance - deliveries[i].commission.treasury
+  }
+}
+
 calculPrice();
+calculCommission();
 
 //list of actors for payment
 //useful from exercise 5
