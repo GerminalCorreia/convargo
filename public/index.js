@@ -85,6 +85,7 @@ function calculPrice () {
   }
 };
 
+//function that calculates the reduction of price depending on the transported volume
 function decreazingPrice (m3) {
   var reduction = 1;
   if (m3 > 25) {
@@ -99,17 +100,29 @@ function decreazingPrice (m3) {
   return (reduction);
 }
 
+//function that calculates the commissions
 function calculCommission () {
   for (var i = 0; i < deliveries.length; i++) {
     var commission = deliveries[i].price * 0.3;
     deliveries[i].commission.insurance = commission / 2;
-    deliveries[i].commission.treasury = Math.floor(deliveries[i].distance/500)
+    deliveries[i].commission.treasury = Math.floor(deliveries[i].distance/500) + 1
     deliveries[i].commission.convargo = commission - deliveries[i].commission.insurance - deliveries[i].commission.treasury
+  }
+}
+
+//function that calculates the price changes if the deductible reduction is selected
+function calculDeductible () {
+  for (var i = 0; i < deliveries.length; i++) {
+    if (deliveries[i].options.deductibleReduction == true) {
+      deliveries[i].price += deliveries[i].volume
+      deliveries[i].commission.convargo += deliveries[i].volume
+    }
   }
 }
 
 calculPrice();
 calculCommission();
+calculDeductible();
 
 //list of actors for payment
 //useful from exercise 5
