@@ -71,6 +71,37 @@ var deliveries = [{
   }
 }];
 
+//function that calculates the price
+function calculPrice () {
+  for (var i = 0; i < deliveries.length; i++) {
+    for (var j = 0; j < truckers.length; j++) {
+      if (deliveries[i].truckerId == truckers[j].id) {
+        var pricePerKm = truckers[j].pricePerKm;
+        var pricePerVolume = truckers[j].pricePerVolume;
+        break;
+      }
+    }
+    deliveries[i].price = deliveries[i].distance * pricePerKm + deliveries[i].volume * pricePerVolume;
+  }
+};
+
+function decreazingPrice () {
+  for (var i = 0; i < deliveries.length; i++) {
+    if (deliveries[i].volume > 25) {
+      deliveries[i].price = deliveries[i].price / 2;
+    }
+    else if (deliveries[i].volume > 10) {
+      deliveries[i].price = deliveries[i].price / 10 * 7;
+    }
+    else if (deliveries[i].volume > 5) {
+      deliveries[i].price = deliveries[i].price / 10 * 9;
+    }
+  }
+}
+
+calculPrice();
+decreazingPrice();
+
 //list of actors for payment
 //useful from exercise 5
 const actors = [{
