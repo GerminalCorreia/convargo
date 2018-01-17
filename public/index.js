@@ -197,6 +197,23 @@ const actors = [{
   }]
 }];
 
+//function that calculates the debts and credits for each actor involved
+function calculDebitCredit () {
+  for (var i = 0; i < deliveries.length; i++) {
+    for (var j = 0; j < actors.length; j++) {
+      if (deliveries[i].id == actors[j].deliveryId) {
+        actors[j].payment[0].amount = deliveries[i].price;
+        actors[j].payment[1].amount = deliveries[i].price - deliveries[i].commission.insurance - deliveries[i].commission.treasury - deliveries[i].commission.convargo;
+        actors[j].payment[2].amount = deliveries[i].commission.insurance;
+        actors[j].payment[3].amount = deliveries[i].commission.treasury;
+        actors[j].payment[4].amount = deliveries[i].commission.convargo;
+      }
+    }
+  }
+}
+
+calculDebitCredit();
+
 console.log(truckers);
 console.log(deliveries);
 console.log(actors);
