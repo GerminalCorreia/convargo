@@ -81,26 +81,25 @@ function calculPrice () {
         break;
       }
     }
-    deliveries[i].price = deliveries[i].distance * pricePerKm + deliveries[i].volume * pricePerVolume;
+    deliveries[i].price = deliveries[i].distance * pricePerKm + deliveries[i].volume * pricePerVolume * decreazingPrice(deliveries[i].volume);
   }
 };
 
-function decreazingPrice () {
-  for (var i = 0; i < deliveries.length; i++) {
-    if (deliveries[i].volume > 25) {
-      deliveries[i].price = deliveries[i].price / 2;
-    }
-    else if (deliveries[i].volume > 10) {
-      deliveries[i].price = deliveries[i].price / 10 * 7;
-    }
-    else if (deliveries[i].volume > 5) {
-      deliveries[i].price = deliveries[i].price / 10 * 9;
-    }
+function decreazingPrice (m3) {
+  var reduction = 1;
+  if (m3 > 25) {
+    reduction = 0.5;
   }
+  else if (m3 > 10) {
+    reduction = 0.7;
+  }
+  else if (m3 > 5) {
+    reduction = 0.9;
+  }
+  return (reduction);
 }
 
 calculPrice();
-decreazingPrice();
 
 //list of actors for payment
 //useful from exercise 5
